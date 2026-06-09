@@ -1,6 +1,33 @@
 from rest_framework import serializers
 from core.serializers import BaseModelSerializer
 from .models import Address
+from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer, UserSerializer as BaseUserSerializer
+
+class UserCreateSerializer(BaseUserCreateSerializer):
+    class Meta(BaseUserCreateSerializer.Meta):
+        model = BaseUserCreateSerializer.Meta.model
+        fields = (
+            'id',
+            'email',
+            'password',
+            'first_name',
+            'last_name',
+            'phone_number',
+        )
+
+class UserSerializer(BaseUserSerializer):
+    class Meta(BaseUserSerializer.Meta):
+        model = BaseUserSerializer.Meta.model
+        ref_name = 'CustomUser'
+        fields = (
+            'id',
+            'email',
+            'first_name',
+            'last_name',
+            'phone_number',
+            'is_staff',
+        )
+        read_only_fields = ('is_staff',)
 
 class AddressSerializer(BaseModelSerializer):
     class Meta:
