@@ -1,5 +1,4 @@
 from django.db import models
-# from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.text import slugify
@@ -53,6 +52,7 @@ class Brand(BaseModel):
     slug = models.SlugField(
         max_length=255, unique=True, blank=True, db_index=True
     )
+    description = models.TextField(null=True, blank=True)
     logo = models.ImageField(upload_to="brands/", null=True, blank=True)
     website = models.URLField(blank=True)
     is_active = models.BooleanField(default=True, db_index=True)
@@ -106,3 +106,4 @@ class AttributeValue(BaseModel):
     def __str__(self) -> str:
         return f"{self.attribute.name}: {self.value}"
     
+ 
