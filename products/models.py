@@ -133,6 +133,10 @@ class ProductVariant(BaseModel):
     def is_low_stock(self)-> bool:
         return 0 < self.stock <= self.low_stock_threshold
     
+    @property
+    def is_in_stock(self) -> bool:
+        return self.stock > 0
+    
 class ProductImage(BaseModel):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="images"

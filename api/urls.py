@@ -10,6 +10,14 @@ router.register('categories', CategoryViewSet, basename="category")
 router.register('brands', BrandViewSet, basename="brand")
 router.register('attributes', AttributeViewSet, basename="attribute")
 router.register('tags', TagViewSet, basename="tag")
+router.register('products', ProductViewSet, basename='product')
+
+product_router = routers.NestedDefaultRouter(
+    router,
+    'products',
+    lookup = 'product'
+)
+product_router.register('variants', ProductVariantViewSet, basename="variant")
 
 attribute_router = routers.NestedDefaultRouter(
     router,
@@ -21,6 +29,7 @@ attribute_router.register('values', AttributeValueViewSet, basename="value")
 urlpatterns = [
     path('',include(router.urls)),
     path('',include(attribute_router.urls)),
+    path('',include(product_router.urls)),
 
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
